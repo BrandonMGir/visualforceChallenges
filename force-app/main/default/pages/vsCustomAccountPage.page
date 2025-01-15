@@ -1,0 +1,16 @@
+<apex:page controller="customAccountController">
+    <apex:stylesheet value="{!$Resource.style}" />
+    <h1>Custom Page</h1>
+
+    <apex:outputPanel id="greeting-panel" rendered="{!visible}">
+        <p>Hi, Moron</p>
+    </apex:outputPanel>
+
+
+    <apex:form>
+        <apex:actionSupport event="onclick" reRender="greetings-panel">
+            <apex:commandButton value="Greeting" action="{!ToggleVisible}" />
+        </apex:actionSupport>
+    </apex:form>
+
+</apex:page>

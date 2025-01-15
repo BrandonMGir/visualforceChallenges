@@ -1,0 +1,37 @@
+<apex:page controller="CustomAccountDetailController">
+    <apex:form>
+        <apex:pageBlock mode="inlineEdit">
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Find" action="{!GetAccountInfo}" />
+                <apex:commandButton value="Update" action="{!SaveChanges}" id="update-records" style="display:none" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:pageMessages/>
+                <apex:inputField value="{!account.name}">
+                    <apex:actionSupport event="onkeypress" action="{!GetPartialAccountInfo}" reRender="related-contacts" />
+                </apex:inputField>
+            </apex:pageBlockSection>
+            <apex:outputText value="Results:" />
+            <apex:actionRegion>
+                <apex:pageBlockSection columns="1" id="related-contacts">
+                    <apex:outputField value="{!account.name}" rendered="{!account.name != null || account.name != ''}">
+                        <apex:inlineEditSupport showOnEdit="update-records" />
+                    </apex:outputField>
+                    <apex:pageBlockTable value="{!contacts}" var="con" rendered="{!(contactSize > 0)}">
+                        <apex:column headerValue="Contact First Name">
+                            <apex:outputField value="{!con.firstname}">
+                                <apex:inlineEditSupport showOnEdit="update-records" />
+                            </apex:outputField>
+                        </apex:column>
+                        <apex:column headerValue="Contact Last Name">
+                            <apex:outputField value="{!con.lastname}">
+                                <apex:inlineEditSupport showOnEdit="update-records" />
+                            </apex:outputField>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:actionRegion>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>
