@@ -70,12 +70,30 @@ public class AccountDetailListTest {
     @isTest
     static void SaveChanges_PositiveTest() {
         CustomAccountDetailController controller = new CustomAccountDetailController();
-        final String accName = 'randoAccount';
+        final String oldAccName = 'testAcc0';
+        final String newAccName = 'newAccountName';
+        final String newContactName = 'newContactName';
 
-        controller.account.Name = accName;
-        Contact con = new Contact(FirstName='Jon', LastName='Smith', AccountId=acc.Id);
+        Account acc = [SELECT Name FROM Account Where Name = :oldAccName Limit 1];
+        List<Contact> contacts = [SELECT Name FROM Contact WHERE AccountId = :acc.Id];
 
-        
+        controller.account = acc;
+        controller.contacts = contacts;
+
+        controller.account.Name = newAccName;
+        controller.contacts[0].FirstName = newContactName;
+
+        controller.SaveChanges();
+
+        acc = [SELECT Name FROM Account Where Name = :newAccName Limit 1];
+        contacts = [SELECT Name FROM Contact WHERE AccountId = :acc.Id];
+
+        controller.account = acc;
+        controller.contacts = contacts;
+
+        Assert.areEqual(newAccName, acc.Name);
+        Assert.areEqual(newContactName, contacts[0].FirstName);
+
     }
 
     //negative

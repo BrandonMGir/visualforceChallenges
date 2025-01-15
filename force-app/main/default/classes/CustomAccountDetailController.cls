@@ -2,7 +2,7 @@ public with sharing class CustomAccountDetailController {
 
     public Account account{get; set;}
     public List<Contact> contacts{get;set;}
-    public Integer contactSize{get{return contacts.size();}}
+    public transient Integer contactSize{get{return contacts.size();}}
 
     public CustomAccountDetailController() {
         account = new Account();

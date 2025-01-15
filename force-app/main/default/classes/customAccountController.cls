@@ -1,8 +1,8 @@
 public with sharing class customAccountController {
-    private ID accountId = '001Ru00000P9m5UIAR';
+    private transient ID accountId = '001Ru00000P9m5UIAR';
 
-    public boolean visible{get; set;}
-    public String accountName{get; set;}
+    public transient boolean visible{get; set;}
+    public transient String accountName{get; set;}
 
     public customAccountController() {
         visible = false;
